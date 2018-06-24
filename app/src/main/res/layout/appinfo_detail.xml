@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.DetailActivity"
+    tools:layout_editor_absoluteY="50dp">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="384dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="84dp"
+        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toTopOf="@+id/ConstraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+            <com.qmuiteam.qmui.widget.QMUITopBar
+                android:id="@+id/topbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:qmui_topbar_title_color="@color/qmui_config_color_white"
+                app:qmui_layout_collapseMode="pin"
+                app:qmui_topbar_bg_color="@color/qmui_config_color_blue"
+                app:qmui_topbar_need_separator="false" >
+
+                <Button
+                    android:id="@+id/topbar_right_change_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Button"
+                    android:visibility="invisible" />
+            </com.qmuiteam.qmui.widget.QMUITopBar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ImageView
+        android:id="@+id/app_info_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_marginTop="5dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toTopOf="@+id/ConstraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_bias="0.222" />
+
+    <LinearLayout
+        android:id="@+id/ConstraintLayout"
+        android:layout_width="384dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="58dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <ListView
+            android:id="@+id/app_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/audit_button_Layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout"
+        app:layout_constraintVertical_bias="0.111">
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/pass"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="通过"
+            android:textColor="@color/qmui_config_color_white"
+            app:qmui_backgroundColor="@color/press_green"
+            app:qmui_borderColor="@color/press_green" />
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/no_pass"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@id/pass"
+            android:text="不通过"
+            android:textColor="@color/qmui_config_color_white"
+            app:qmui_backgroundColor="@color/press_red"
+            app:qmui_borderColor="@color/press_red" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/dev_button_Layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout"
+        app:layout_constraintVertical_bias="0.111">
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/shelves_button"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:text="上架"
+            android:textColor="@color/qmui_config_color_white"
+            app:qmui_backgroundColor="@color/press_green"
+            app:qmui_borderColor="@color/press_green" />
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/updateAppInfo_button"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignEnd="@+id/deleteAppInfo_button"
+            android:layout_alignLeft="@+id/shelves_button"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignStart="@+id/deleteAppInfo_button"
+            android:layout_toEndOf="@+id/shelves_button"
+            android:text="修改"
+            android:textColor="@color/qmui_config_color_white"
+            app:qmui_backgroundColor="@color/press_green"
+            app:qmui_borderColor="@color/press_green" />
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/deleteAppInfo_button"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:text="删除"
+            android:textColor="@color/qmui_config_color_white"
+            app:qmui_backgroundColor="@color/press_red"
+            app:qmui_borderColor="@color/press_red" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

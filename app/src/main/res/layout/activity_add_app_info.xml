@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AddAppInfoActivity"
+    tools:layout_editor_absoluteY="50dp">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="384dp"
+        android:layout_height="40dp"
+        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toTopOf="@+id/ConstraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.qmuiteam.qmui.widget.QMUITopBar
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:qmui_layout_collapseMode="pin"
+            app:qmui_topbar_bg_color="@color/qmui_config_color_blue"
+            app:qmui_topbar_need_separator="false"
+            app:qmui_topbar_title_color="@color/qmui_config_color_white">
+
+            <Button
+                android:id="@+id/topbar_right_change_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:text="Button"
+                android:visibility="invisible" />
+        </com.qmuiteam.qmui.widget.QMUITopBar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/ConstraintLayout"
+        android:layout_width="384dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="58dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/softName_et"
+            android:layout_toStartOf="@+id/softName_et"
+            android:text="软件名称"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <EditText
+            android:id="@+id/softName_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/apkName_et"
+            android:layout_alignStart="@+id/textView"
+            android:text="APK名称"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/textView"
+            android:layout_marginBottom="134dp"
+            android:text="所属分类"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView"
+            android:layout_alignTop="@+id/flatform_spinner"
+            android:text="所属平台"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/downloads_et"
+            android:layout_alignStart="@+id/textView"
+            android:text="下载次数"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/appInfomation_et"
+            android:layout_alignStart="@+id/textView"
+            android:text="应用简介"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/softwareSize_et"
+            android:layout_alignStart="@+id/textView"
+            android:text="软件大小"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/interfaceLanguage_et"
+            android:layout_alignStart="@+id/textView"
+            android:text="界面语言"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/supportROM_et"
+            android:layout_alignStart="@+id/textView"
+            android:text="支持ROM"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <EditText
+            android:id="@+id/apkName_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/softName_et"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/supportROM_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/apkName_et"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/interfaceLanguage_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/supportROM_et"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/softwareSize_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/interfaceLanguage_et"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/downloads_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/softwareSize_et"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/appInfomation_et"
+            android:layout_width="wrap_content"
+            android:layout_height="112dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="2dp"
+            android:ems="10"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:minLines="5"
+            android:singleLine="false" />
+
+        <Spinner
+            android:id="@+id/flatform_spinner"
+            android:layout_width="143dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/downloads_et"
+            android:layout_toEndOf="@+id/textView" />
+
+        <Spinner
+            android:id="@+id/categoryThree"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView6"
+            android:layout_toEndOf="@+id/categoryTow" />
+
+        <Spinner
+            android:id="@+id/categoryTow"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView6"
+            android:layout_toEndOf="@+id/categoryOne" />
+
+        <Spinner
+            android:id="@+id/categoryOne"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView6"
+            android:layout_toEndOf="@+id/textView" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textView7"
+            android:layout_marginEnd="12dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@mipmap/pictures" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/imageButton"
+            android:layout_below="@+id/imageButton"
+            android:text="应用图标"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/dev_button_Layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout"
+        app:layout_constraintVertical_bias="0.111">
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/addAppInfo_button"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignEnd="@+id/deleteAppInfo_button"
+            android:layout_alignLeft="@+id/shelves_button"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignStart="@+id/deleteAppInfo_button"
+            android:layout_toEndOf="@+id/shelves_button"
+            android:text="提交添加"
+            android:textColor="@color/qmui_config_color_white"
+            app:qmui_backgroundColor="@color/press_green"
+            app:qmui_borderColor="@color/press_green" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.DetailActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/qmui_config_color_blue"
+        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toTopOf="@+id/pull_to_refresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <com.qmuiteam.qmui.widget.QMUITopBar
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:qmui_layout_collapseMode="pin"
+            app:qmui_topbar_bg_color="@color/qmui_config_color_blue"
+            app:qmui_topbar_need_separator="false"
+            app:qmui_topbar_title_color="@color/qmui_config_color_white"
+            app:qmui_topbar_title_gravity="left_center">
+
+            <Button
+                android:id="@+id/topbar_right_change_button"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:text="Button"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/topbar_right_search_button"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/topbar_right_change_button"
+                android:text="search"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/topbar_right_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/topbar_right_search_button"
+                android:text="ADD"
+                android:visibility="invisible" />
+        </com.qmuiteam.qmui.widget.QMUITopBar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout
+        android:id="@+id/pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/appBarLayout"
+        android:background="?attr/qmui_config_color_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <ListView
+            android:id="@+id/listview_applist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:entries="@layout/items_check" />
+
+    </com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout>
+
+
+</RelativeLayout>

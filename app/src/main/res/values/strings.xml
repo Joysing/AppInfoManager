@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">APP信息管理系统</string>
+    <string name="remenber_me">记住我</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="logout">退出登录</string>
+    <string name="title_activity_detail">DetailActivity</string>
+</resources>

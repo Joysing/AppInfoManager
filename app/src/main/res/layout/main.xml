@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ManagerMainActivity"
+    tools:layout_editor_absoluteY="25dp">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/contentViewPager"
+        android:layout_width="wrap_content"
+        android:layout_height="515dp"
+        android:background="@color/qmui_config_color_white" />
+
+    <com.qmuiteam.qmui.widget.QMUITabSegment
+        android:id="@+id/tabSegment"
+        android:layout_width="384dp"
+        android:layout_height="50dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contentViewPager" />
+
+</android.support.constraint.ConstraintLayout>
