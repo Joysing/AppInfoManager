@@ -87,8 +87,8 @@ public class AppVersionActivity extends AppCompatActivity {
     private int appId;
     private int userId;
     private int versionId;
-    private String apkFilePath;
-    private String apkFileName;
+    private String apkFilePath="";
+    private String apkFileName="";
     private BigDecimal versionSize;
 
     AppVersion appVersion;
@@ -186,6 +186,9 @@ public class AppVersionActivity extends AppCompatActivity {
             return;
         }else if("".equals(versionInfo)){
             Toast.makeText(context,"版本简介不能为空",Toast.LENGTH_SHORT).show();
+            return;
+        }else if("".equals(apkFilePath)){
+            Toast.makeText(context,"请选择apk文件",Toast.LENGTH_SHORT).show();
             return;
         }
         RequestBody fileBody = RequestBody.create(MediaType.parse("application/vnd.android.package-archive"), new File(apkFilePath));

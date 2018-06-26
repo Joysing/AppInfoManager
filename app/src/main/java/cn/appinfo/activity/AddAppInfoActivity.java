@@ -164,6 +164,9 @@ public class AddAppInfoActivity extends AppCompatActivity {
         }else if(appInfomation.equals("")){
             Toast.makeText(context,"软件简介不能为空",Toast.LENGTH_SHORT).show();
             return;
+        }else if(logoPicPath.equals("")){
+            Toast.makeText(context,"请选择软件图标",Toast.LENGTH_SHORT).show();
+            return;
         }
         Message message = new Message();
         RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), new File(logoPicPath));
@@ -264,12 +267,13 @@ public class AddAppInfoActivity extends AppCompatActivity {
                 Toast.makeText(context,"软件简介不能为空",Toast.LENGTH_SHORT).show();
                 return;
             }
-            if(logoPicPath!=null){
+            RequestBody fileBody=new FormBody.Builder().build();
+            if(!"".equals(logoPicPath)){
                 File cacheImage = new File(context.getFilesDir(), appInfo.getId() + ".png");
                 cacheImage.delete();
+                fileBody = RequestBody.create(MediaType.parse("image/*"), new File(logoPicPath));
             }
             Message message = new Message();
-            RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), new File(logoPicPath));
             RequestBody multipartBody=new MultipartBody.Builder().setType(MultipartBody.FORM)
                     .addFormDataPart("appInfoId", appInfo.getId()+"")
                     .addFormDataPart("softwareName", softwareName)
@@ -299,7 +303,6 @@ public class AddAppInfoActivity extends AppCompatActivity {
                     String json = response.body().string();
                     //把json转换成Java对象
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                    Log.i("00",json);
                     ResultUtil resultUtil = gson.fromJson(json, ResultUtil.class);
                     Message msg=new Message();
                     if (resultUtil.isResult()){
@@ -308,7 +311,7 @@ public class AddAppInfoActivity extends AppCompatActivity {
                         finish();
                     }else {
                         msg.what=Constants.FAIL;
-                        message.obj = "App基础信息修改失败！";
+                        message.obj = "App基础信息修改失败！"+resultUtil.getMessage();
                     }
                     handler.sendMessage(message);
                 }
