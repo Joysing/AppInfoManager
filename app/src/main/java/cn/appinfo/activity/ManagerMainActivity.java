@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.view.ViewGroup;
 
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIResHelper;
@@ -32,7 +33,12 @@ public class ManagerMainActivity extends Activity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
-
+        ViewGroup.LayoutParams params = mContentViewPager.getLayoutParams();
+        params.height =QMUIDisplayHelper.getScreenHeight(this)
+                -QMUIDisplayHelper.getStatusBarHeight(this)
+                -QMUIDisplayHelper.getActionBarHeight(this)
+                -100;
+        mContentViewPager.setLayoutParams(params);
         initTabSegment();
     }
 

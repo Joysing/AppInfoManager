@@ -9,7 +9,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
-        android:layout_width="384dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="84dp"
         android:fitsSystemWindows="true"

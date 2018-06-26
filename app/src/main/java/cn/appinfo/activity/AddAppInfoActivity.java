@@ -44,8 +44,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.appinfo.R;
+import cn.appinfo.entity.AppCategory;
 import cn.appinfo.entity.AppInfo;
-import cn.appinfo.entity.Category;
 import cn.appinfo.entity.FlatForm;
 import cn.appinfo.tools.Constants;
 import cn.appinfo.tools.FileUtil;
@@ -91,7 +91,7 @@ public class AddAppInfoActivity extends AppCompatActivity {
     Button addAppInfoButton;
 
     private List<FlatForm> flatFormList=null;
-    private List<Category> categoryList;
+    private List<AppCategory> categoryList;
     private Map<String,String> flatFormMap=new HashMap<>();
     private Map<String,String> categoryMap=new HashMap<>();
 
@@ -372,7 +372,7 @@ public class AddAppInfoActivity extends AppCompatActivity {
                 String json = response.body().string();
                 //把json转换成Java对象
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                categoryList = gson.fromJson(json,new TypeToken<List<Category>>() {}.getType());
+                categoryList = gson.fromJson(json,new TypeToken<List<AppCategory>>() {}.getType());
                 if (categoryList==null){
                     message.what = Constants.FAIL;
                     message.obj = "获取分类列表失败。";
@@ -479,9 +479,9 @@ public class AddAppInfoActivity extends AppCompatActivity {
 
                     break;
                 case Constants.LOAD_CATEGORY_ONE_LIST_SUCCESS:
-                    for(Category category:categoryList){
-                        stringList.add(category.getCategoryName());
-                        categoryMap.put(category.getId(),category.getCategoryName());
+                    for(AppCategory appCategory:categoryList){
+                        stringList.add(appCategory.getCategoryName());
+                        categoryMap.put(appCategory.getId().toString(),appCategory.getCategoryName());
                     }
                     adapter =new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, stringList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);//为适配器添加样式
@@ -498,9 +498,9 @@ public class AddAppInfoActivity extends AppCompatActivity {
                     });
                     break;
                 case Constants.LOAD_CATEGORY_TWO_LIST_SUCCESS:
-                    for(Category category:categoryList){
-                        stringList.add(category.getCategoryName());
-                        categoryMap.put(category.getId(),category.getCategoryName());
+                    for(AppCategory appCategory:categoryList){
+                        stringList.add(appCategory.getCategoryName());
+                        categoryMap.put(appCategory.getId().toString(),appCategory.getCategoryName());
                     }
                     adapter =new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, stringList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);//为适配器添加样式
@@ -517,9 +517,9 @@ public class AddAppInfoActivity extends AppCompatActivity {
                     });
                     break;
                 case Constants.LOAD_CATEGORY_THREE_LIST_SUCCESS:
-                    for(Category category:categoryList){
-                        stringList.add(category.getCategoryName());
-                        categoryMap.put(category.getId(),category.getCategoryName());
+                    for(AppCategory appCategory:categoryList){
+                        stringList.add(appCategory.getCategoryName());
+                        categoryMap.put(appCategory.getId().toString(),appCategory.getCategoryName());
                     }
                     adapter =new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, stringList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);//为适配器添加样式
