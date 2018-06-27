@@ -154,7 +154,6 @@ public class ListViewAdapter extends BaseAdapter {
             highLightSoftName.setSpan(new ForegroundColorSpan(Color.RED),startIndex,endIndex, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             viewHolder.softNameView.setText(highLightSoftName);
         }
-        viewHolder.softNameView.setText(appInfo.getSoftwareName());
         viewHolder.versionView.setText("最新版本号："+(appInfo.getVersionNo()==null?"无":appInfo.getVersionNo()));
         viewHolder.statusView.setText("状态:"+appInfo.getStatusName()
                 +"\n大小："+appInfo.getSoftwareSize()+"M"
