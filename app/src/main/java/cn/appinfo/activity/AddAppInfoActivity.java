@@ -128,14 +128,6 @@ public class AddAppInfoActivity extends AppCompatActivity {
      */
     @OnClick(R.id.addAppInfo_button)
     public void addAppInfo(){
-//        String softwareName="安卓测试添加";
-//        String apkName="cc.joysing.test";
-//        String supportROM="Android4.0+";
-//        String interfaceLanguage="中文";
-//        String softwareSize="0.48";
-//        String downloads="1000";
-//        String appInfomation="简介";
-//        String logoPicPath="/storage/emulated/0/DCIM/sontancomputer.jpg";
         String softwareName=softNameEditText.getText().toString();
         String apkName=apkNameEditText.getText().toString();
         String supportROM=supportRomEditText.getText().toString();
@@ -232,8 +224,6 @@ public class AddAppInfoActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
         if(bitmap!=null){
             imageButton.setImageBitmap(bitmap);
-        }else{
-            imageButton.setImageResource(R.mipmap.no_picture);
         }
         addAppInfoButton.setText("提交修改");
         addAppInfoButton.setOnClickListener(view -> {
@@ -306,7 +296,7 @@ public class AddAppInfoActivity extends AppCompatActivity {
                     ResultUtil resultUtil = gson.fromJson(json, ResultUtil.class);
                     Message msg=new Message();
                     if (resultUtil.isResult()){
-                        msg.what=Constants.ADD_APPINFO_SUCCESS;
+                        msg.what=Constants.UPDATE_APPINFO_SUCCESS;
                         message.obj = "App基础信息修改成功！";
                         finish();
                     }else {

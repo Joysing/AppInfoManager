@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -28,7 +29,9 @@ import com.qmuiteam.qmui.widget.popup.QMUIListPopup;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,18 +116,10 @@ public class DetailActivity extends Activity {
         list.add("所属分类："+appInfo.getCategoryLevel1Name()+"--"+appInfo.getCategoryLevel2Name()+"--"+appInfo.getCategoryLevel3Name());
         list.add("软件状态："+appInfo.getStatusName());
         list.add("软件简介："+appInfo.getAppInfo());
-        list.add("创建时间: "+simpleDateFormat.format(appInfo.getCreationDate().getTime()));
+        list.add("创建时间："+simpleDateFormat.format(appInfo.getCreationDate().getTime()));
         ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,list);
         listView.setAdapter(arrayAdapter);
-
-        File file = new File(getFilesDir(), appInfo.getId() + ".png");
-        //本地加载
-        Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-        if(bitmap!=null){
-            iconView.setImageBitmap(bitmap);
-        }else{
-            iconView.setImageResource(R.mipmap.no_picture);
-        }
+        loadIcon();
     }
     private void showAuditInfo(AppInfo appInfo){
         devButtonLayout.setVisibility(View.GONE);
@@ -161,7 +156,44 @@ public class DetailActivity extends Activity {
                 break;
         }
     }
+    private void loadIcon() {
+        final String url = Constants.SERVER_IP + ":" + Constants.SERVER_PORT + appInfo.getLogoPicPath();
+        final File dir = context.getFilesDir();
+        File file = new File(dir, appInfo.getId() + ".png");
+        if (file.exists()) {
+            //本地加载
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+            iconView.setImageBitmap(bitmap);
+        } else {
+            //网络加载
+            if (appInfo.getLogoPicPath() != null) {
 
+                Message message=new Message();
+                OkHttpUtil.sendOkHttpRequest(url, null, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.i("loadIconUrl", "load---" + url + "----Fail!!");
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        byte[] data = response.body().bytes();
+                        //保存文件
+                        OutputStream os = new FileOutputStream(new File(dir, appInfo.getId() + ".png"));
+                        os.write(data);
+                        os.flush();
+                        os.close();
+                        //创建BitMap
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                        message.what=Constants.LOAD_IMAGE_SUCCESS;
+                        message.obj=bitmap;
+                        handler.sendMessage(message);
+                    }
+
+                });
+            }
+        }
+    }
     private void initTopBar(){
         mTopBar.addLeftBackImageButton().setOnClickListener(v -> finish());
         if(loginType==Constants.DEV_USER_TYPE) {
@@ -372,6 +404,9 @@ public class DetailActivity extends Activity {
                 case Constants.LOAD_APPINFO_DETAIL_SUCCESS:
                     loadAppInfo();
                 break;
+                case Constants.LOAD_IMAGE_SUCCESS:
+                    iconView.setImageBitmap((Bitmap) msg.obj);
+                    break;
                 case Constants.AUDIT_SUCCESS:
                 case Constants.SOLD_UP_OR_DOWN_APP_SUCCESS:
                 case Constants.DELETE_APP_SUCCESS:

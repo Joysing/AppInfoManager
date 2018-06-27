@@ -99,9 +99,9 @@ public class ListViewAdapter extends BaseAdapter {
             viewHolder.softNameView.setText(highLightSoftName);
         }
         viewHolder.versionView.setText("最新版本号："+(appInfo.getVersionNo()==null?"无":appInfo.getVersionNo()));
-        viewHolder.statusView.setText("状态:"+appInfo.getStatusName()
+        viewHolder.statusView.setText("状态："+appInfo.getStatusName()
                 +"\n大小："+appInfo.getSoftwareSize()+"M"
-                +"\n创建时间"+simpleDateFormat.format(appInfo.getCreationDate().getTime()));
+                +"\n时间："+simpleDateFormat.format(appInfo.getCreationDate().getTime()));
 
         if(Constants.BACKEND_USER_TYPE==loginType){
             viewHolder.buttonCheck.setText(appInfo.getStatusName());
