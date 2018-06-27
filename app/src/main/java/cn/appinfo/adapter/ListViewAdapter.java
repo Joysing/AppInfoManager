@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import cn.appinfo.R;
@@ -27,7 +28,7 @@ public class ListViewAdapter extends BaseAdapter {
     private UserInfo userInfo;
     private int loginType;
     private JumpActivityService jumpActivityService;
-
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");;
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
     }
@@ -100,7 +101,7 @@ public class ListViewAdapter extends BaseAdapter {
         viewHolder.versionView.setText("最新版本号："+(appInfo.getVersionNo()==null?"无":appInfo.getVersionNo()));
         viewHolder.statusView.setText("状态:"+appInfo.getStatusName()
                 +"\n大小："+appInfo.getSoftwareSize()+"M"
-                +"\n创建时间"+appInfo.getCreationDate());
+                +"\n创建时间"+simpleDateFormat.format(appInfo.getCreationDate().getTime()));
 
         if(Constants.BACKEND_USER_TYPE==loginType){
             viewHolder.buttonCheck.setText(appInfo.getStatusName());

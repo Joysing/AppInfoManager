@@ -381,6 +381,6 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
         intent.putExtra("operation",operation);
         intent.putExtra("loginType",loginType);
         intent.putExtra("userInfo",userInfo);
-        context.startActivity(intent);
+        ((Activity)context).startActivityForResult(intent,Constants.LOAD_APPINFO_DETAIL_CODE);
     }
 }

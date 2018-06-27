@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import cn.appinfo.R;
 import cn.appinfo.adapter.ViewPagerAdapter;
 import cn.appinfo.entity.UserInfo;
+import cn.appinfo.tools.Constants;
 
 
 public class DeveloperMainActivity extends Activity {
@@ -69,7 +70,15 @@ public class DeveloperMainActivity extends Activity {
 
     @Override
     protected void onRestart() {
-//        mContentViewPager.setAdapter(new ViewPagerAdapter(this, userInfo));
         super.onRestart();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case Constants.LOAD_APPINFO_DETAIL_CODE:
+                mContentViewPager.setAdapter(new ViewPagerAdapter(this, userInfo));
+                break;
+        }
     }
 }

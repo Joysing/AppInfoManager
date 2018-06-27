@@ -130,10 +130,16 @@ public class Constants {
 	public static final int ADD_APPINFO_SUCCESS=5;
 	public static final int UPDATE_APPINFO_SUCCESS=6;
 
+    public static final int AUDIT_SUCCESS=1;
+    public static final int LOAD_APPINFO_DETAIL_SUCCESS=2;
+    public static final int SOLD_UP_OR_DOWN_APP_SUCCESS=3;
+    public static final int DELETE_APP_SUCCESS=4;
+
 	public static final int LOAD_APP_VERSIONS_SUCCESS=1;
     public static final int ADD_APP_VERSION_SUCCESS=2;
     public static final int UPDATE_APP_VERSION_SUCCESS=3;
     public static final int LOAD_APP_NEW_VERSION_SUCCESS=4;
 
     public static final int UPDATE_APPINFO_CODE=1;
+    public static final int LOAD_APPINFO_DETAIL_CODE=2;
 }

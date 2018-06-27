@@ -29,6 +29,7 @@ import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +76,7 @@ public class DetailActivity extends Activity {
     private UserInfo userInfo;
     private Context context=this;
     private Integer appInfoId;
+    private SimpleDateFormat simpleDateFormat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,7 @@ public class DetailActivity extends Activity {
         }else{
             showDevAppInfo(appInfo);
         }
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         appInfoId=appInfo.getId();
         loadAppInfo();
 
@@ -110,6 +113,7 @@ public class DetailActivity extends Activity {
         list.add("所属分类："+appInfo.getCategoryLevel1Name()+"--"+appInfo.getCategoryLevel2Name()+"--"+appInfo.getCategoryLevel3Name());
         list.add("软件状态："+appInfo.getStatusName());
         list.add("软件简介："+appInfo.getAppInfo());
+        list.add("创建时间: "+simpleDateFormat.format(appInfo.getCreationDate().getTime()));
         ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,list);
         listView.setAdapter(arrayAdapter);
 
@@ -243,7 +247,7 @@ public class DetailActivity extends Activity {
             public void onResponse(Call call, Response response) throws IOException {
                 boolean result = Boolean.parseBoolean(response.body().string());
                 if(result){
-                    message.what = Constants.SUCCESS;
+                    message.what = Constants.AUDIT_SUCCESS;
                     message.obj = "审核成功！";
                     finish();
                 }else{
@@ -365,9 +369,13 @@ public class DetailActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case Constants.SUCCESS:
+                case Constants.LOAD_APPINFO_DETAIL_SUCCESS:
                     loadAppInfo();
                 break;
+                case Constants.AUDIT_SUCCESS:
+                case Constants.SOLD_UP_OR_DOWN_APP_SUCCESS:
+                case Constants.DELETE_APP_SUCCESS:
+                    setResult(Constants.LOAD_APPINFO_DETAIL_CODE);
                 default:
                     Toast.makeText(context,msg.obj.toString(),Toast.LENGTH_LONG).show();
                 break;
@@ -393,7 +401,7 @@ public class DetailActivity extends Activity {
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        message.what = Constants.SUCCESS;
+                        message.what = Constants.LOAD_APPINFO_DETAIL_SUCCESS;
                         String json = response.body().string();
                         //把json转换成Java对象
                         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
