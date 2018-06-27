@@ -2,6 +2,11 @@ package cn.appinfo.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +29,12 @@ public class ListViewAdapter extends BaseAdapter {
     private UserInfo userInfo;
     private int loginType;
     private JumpActivityService jumpActivityService;
+    private boolean searchFlag=false;
+    SpannableStringBuilder style=new SpannableStringBuilder();
+
+    public void setSearchFlag(boolean searchFlag) {
+        this.searchFlag = searchFlag;
+    }
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
@@ -89,9 +100,21 @@ public class ListViewAdapter extends BaseAdapter {
         }else{
             viewHolder.iconView.setImageResource(R.mipmap.no_picture);
         }
-        viewHolder.softNameView.setText(appInfo.getSoftwareName());
+        String searchKey=ViewPagerAdapter.searchSoftwareName;
+        if("".equals(searchKey)){
+            viewHolder.softNameView.setText(appInfo.getSoftwareName());
+        }else{
+            SpannableStringBuilder highLightSoftName=new SpannableStringBuilder(appInfo.getSoftwareName());
+            int startIndex=appInfo.getSoftwareName().toLowerCase().indexOf(searchKey.toLowerCase());
+            Log.i("0000", "showManagerAppList: "+searchKey.length());
+            int endIndex=startIndex+searchKey.length();
+            highLightSoftName.setSpan(new ForegroundColorSpan(Color.RED),startIndex,endIndex, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            viewHolder.softNameView.setText(highLightSoftName);
+        }
         viewHolder.versionView.setText("最新版本号："+(appInfo.getVersionNo()==null?"无":appInfo.getVersionNo()));
-        viewHolder.statusView.setText("状态:"+appInfo.getStatusName());
+        viewHolder.statusView.setText("状态:"+appInfo.getStatusName()
+                +"\n大小："+appInfo.getSoftwareSize()+"M"
+                +"\n创建时间"+appInfo.getCreationDate());
         viewHolder.buttonCheck.setText(appInfo.getStatusName());
         viewHolder.buttonCheck.setOnClickListener((view1) -> jumpActivityService.jump(appInfo,Constants.AUDIT));
         view.setOnClickListener((view2)-> jumpActivityService.jump(appInfo,Constants.AUDIT));
@@ -120,9 +143,22 @@ public class ListViewAdapter extends BaseAdapter {
         }else{
             viewHolder.iconView.setImageResource(R.mipmap.no_picture);
         }
+        String searchKey=ViewPagerAdapter.searchSoftwareName;
+        if("".equals(searchKey)){
+            viewHolder.softNameView.setText(appInfo.getSoftwareName());
+        }else{
+            SpannableStringBuilder highLightSoftName=new SpannableStringBuilder(appInfo.getSoftwareName());
+            int startIndex=appInfo.getSoftwareName().toLowerCase().indexOf(searchKey.toLowerCase());
+            Log.i("0000", "showManagerAppList: "+searchKey.length());
+            int endIndex=startIndex+searchKey.length();
+            highLightSoftName.setSpan(new ForegroundColorSpan(Color.RED),startIndex,endIndex, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            viewHolder.softNameView.setText(highLightSoftName);
+        }
         viewHolder.softNameView.setText(appInfo.getSoftwareName());
         viewHolder.versionView.setText("最新版本号："+(appInfo.getVersionNo()==null?"无":appInfo.getVersionNo()));
-        viewHolder.statusView.setText("状态:"+appInfo.getStatusName());
+        viewHolder.statusView.setText("状态:"+appInfo.getStatusName()
+                +"\n大小："+appInfo.getSoftwareSize()+"M"
+                +"\n创建时间"+appInfo.getCreationDate());
         viewHolder.buttonCheck.setOnClickListener((view1) -> jumpActivityService.jump(appInfo,Constants.DETAIL));
         view.setOnClickListener((view2)-> jumpActivityService.jump(appInfo,Constants.DETAIL));
         return view;

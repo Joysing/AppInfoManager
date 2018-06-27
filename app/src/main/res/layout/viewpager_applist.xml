@@ -55,6 +55,23 @@
                 android:layout_toStartOf="@+id/topbar_right_search_button"
                 android:text="ADD"
                 android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/searchEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="40dp"
+                android:ems="8"
+                android:textSize="@dimen/qmui_btn_text_size"
+                android:hint="搜索"
+                android:imeOptions="actionSearch"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:textColor="@color/qmui_config_color_white"
+                android:textColorHint="@color/qmui_config_color_white"
+                android:visibility="invisible" />
         </com.qmuiteam.qmui.widget.QMUITopBar>
 
     </android.support.design.widget.AppBarLayout>

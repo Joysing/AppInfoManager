@@ -14,8 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +40,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import cn.appinfo.R;
@@ -63,12 +66,25 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
     private Context context; //声明Context成员变量
     private View viewPage;
     private ListView listViewCheck;
+    private EditText searchEditText;
     private int loginType;
     private UserInfo userInfo;
     private List<AppInfo> appInfoList;
     private ListViewAdapter listViewAdapter;
     private QMUIPullRefreshLayout qmuiPullRefreshLayout;
+    public static String searchSoftwareName="";
 
+    private Comparator<AppInfo> sortByNameComparator= (appInfo, t1) -> appInfo.getSoftwareName().compareTo(t1.getSoftwareName());
+    private Comparator<AppInfo> sortBySizeComparator= (appInfo, t1) -> appInfo.getSoftwareSize().compareTo(t1.getSoftwareSize());
+    private Comparator<AppInfo> sortByTimeComparator= (appInfo, t1) -> {
+        if(appInfo.getCreationDate().getTime()>t1.getCreationDate().getTime()){
+            return -1;
+        }else if(appInfo.getCreationDate().getTime()<t1.getCreationDate().getTime()){
+            return 1;
+        }
+        return 0;
+    };
+    private Comparator<AppInfo> defaultComparator=sortByTimeComparator;
     /**
      * 构造方法
      */
@@ -105,15 +121,37 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
             case 0:
                 loginType=userInfo.getUserType();
                 viewPage=LayoutInflater.from(context).inflate(R.layout.viewpager_applist, null);
+                searchEditText=viewPage.findViewById(R.id.searchEditText);
+                searchEditText.setOnEditorActionListener((textView, i, keyEvent) -> {
+                    if (i == EditorInfo.IME_ACTION_SEARCH || i == EditorInfo.IME_ACTION_UNSPECIFIED) {
+                        searchSoftwareName=textView.getText().toString().trim();
+                        getAppList();
+                        return true;
+                    }
+                    return false;
+                });
                 QMUITopBar mTopBar = viewPage.findViewById(R.id.topbar);
                 mTopBar.setTitle("App列表");
-                mTopBar.addRightImageButton(R.mipmap.search_btn_no, R.id.topbar_right_search_button);
+                mTopBar.addRightImageButton(R.mipmap.search_btn_no, R.id.topbar_right_search_button).setOnClickListener((View view) -> {
+                    if(searchEditText.getVisibility()==View.INVISIBLE){
+                        searchEditText.setVisibility(View.VISIBLE);
+                        mTopBar.setTitle("");
+                        mTopBar.addLeftBackImageButton().setOnClickListener(view1 -> {
+                            mTopBar.setTitle("App列表");
+                            mTopBar.removeAllLeftViews();
+                            searchEditText.setVisibility(View.INVISIBLE);
+                            searchSoftwareName="";
+                            getAppList();
+                        });
+                    }
+                });
                 if(loginType==Constants.DEV_USER_TYPE){
                     mTopBar.addRightImageButton(R.mipmap.topbar_right_add_button, R.id.topbar_right_add_button)
                     .setOnClickListener(v->{
                         Intent intent=new Intent(context, AddAppInfoActivity.class);
                         intent.putExtra("devId", ((DevUser)userInfo.getUser()).getId());
                         context.startActivity(intent);
+
                     });
                 }
                 mTopBar.addRightImageButton(R.mipmap.topbar_right_change_button, R.id.topbar_right_change_button)
@@ -121,8 +159,8 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
                             QMUIListPopup qmuiListPopup;
                             String[] listItems = new String[]{
                                     "按名称排序",
-                                    "按大小排序",
                                     "按时间排序",
+                                    "按大小排序",
                             };
                             List<String> data = new ArrayList<>();
                             Collections.addAll(data, listItems);
@@ -130,8 +168,22 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
                             qmuiListPopup = new QMUIListPopup(context, QMUIPopup.DIRECTION_NONE, adapter);//创建QMUIListPopup实例 第二个参数：显示位置，第三个位置绑定adapter
                             //创建一个listview第一个参数：设置宽度 2设置高度，3设置adapter的监听
                             qmuiListPopup.create(QMUIDisplayHelper.dp2px(context, 250), QMUIDisplayHelper.dp2px(context, 200), (adapterView, view22, i1, l) -> {
-                                Toast.makeText(context, view22.getTextAlignment()+"Item " + (i1 + 1), Toast.LENGTH_SHORT).show();
+                                switch (i1){
+                                    case 0://按名称排序
+                                        defaultComparator=sortByNameComparator;
+                                        break;
+                                    case 1://按时间排序
+                                        defaultComparator=sortByTimeComparator;
+                                        break;
+                                    case 2://按大小排序
+                                        defaultComparator=sortBySizeComparator;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                sort(defaultComparator);
                                 qmuiListPopup.dismiss();
+
                             });
                             qmuiListPopup.setAnimStyle(QMUIPopup.ANIM_GROW_FROM_CENTER);//设置显示样式
                             qmuiListPopup.show(v);//设置在哪个控件上显示QMUIpopup
@@ -160,7 +212,9 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
                 getAppList();
                 break;
             case 1:
-                String usernameShow=loginType==Constants.BACKEND_USER_TYPE?((BackendUser)userInfo.getUser()).getUserName():((DevUser)userInfo.getUser()).getDevName();
+                String usernameShow=loginType==Constants.BACKEND_USER_TYPE
+                        ?((BackendUser)userInfo.getUser()).getUserName()
+                        :((DevUser)userInfo.getUser()).getDevName();
                 viewPage=LayoutInflater.from(context).inflate(R.layout.viewpager_mine, null);
                 ((TextView)viewPage.findViewById(R.id.textView_usernameShow)).setText("欢迎您："+ usernameShow);
                 ((TextView)viewPage.findViewById(R.id.app_version)).setText("软件版本：v"+QMUIPackageHelper.getAppVersion(context));
@@ -197,10 +251,7 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
                         //加载图片
                         loadIcon(i);
                     }
-                    //成功
-                    listViewAdapter.setAppInfoList(appInfoList);
-                    //通知adapter刷新数
-                    listViewAdapter.notifyDataSetChanged();
+                    sort(defaultComparator);
                     listViewAdapter.setLoginType(loginType);
                     listViewAdapter.setUserInfo(userInfo);
                     listViewCheck.setAdapter(listViewAdapter);
@@ -222,10 +273,14 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
         RequestBody requestBody=null;
         if(loginType==Constants.BACKEND_USER_TYPE){
             url=Constants.GET_BACKEND_APPS_URL;
+            requestBody = new FormBody.Builder()
+                    .add("querySoftwareName",searchSoftwareName)
+                    .build();
         }else if(loginType==Constants.DEV_USER_TYPE){
             url=Constants.GET_DEV_APPS_URL;
             requestBody = new FormBody.Builder()
                     .add("devId", ((DevUser)userInfo.getUser()).getId()+"")
+                    .add("querySoftwareName",searchSoftwareName)
                     .build();
         }
         OkHttpUtil.sendOkHttpRequest(url, requestBody, new Callback() {
@@ -251,7 +306,6 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
                     message.obj = "获取列表失败，请联系管理员";
                 }else {
                     message.what = Constants.LOAD_APP_LIST_SUCCESS;
-                    message.obj = appInfoList;
                 }
                 handler.sendMessage(message);//发送消息
             }
@@ -293,6 +347,16 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
         }
 
 
+    }
+
+    /**
+     * 排序
+     */
+    private void sort(Comparator<AppInfo> comparator){
+        Collections.sort(appInfoList,comparator);
+        listViewAdapter.setAppInfoList(appInfoList);
+        //通知adapter刷新数
+        listViewAdapter.notifyDataSetChanged();
     }
     /**
      * 删除条目的内容

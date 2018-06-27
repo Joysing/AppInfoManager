@@ -34,10 +34,7 @@ public class ManagerMainActivity extends Activity {
         Intent intent = getIntent();
         userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
         ViewGroup.LayoutParams params = mContentViewPager.getLayoutParams();
-        params.height =QMUIDisplayHelper.getScreenHeight(this)
-                -QMUIDisplayHelper.getStatusBarHeight(this)
-                -QMUIDisplayHelper.getActionBarHeight(this)
-                -100;
+        params.height =QMUIDisplayHelper.getScreenHeight(this)-QMUIDisplayHelper.getStatusBarHeight(this)-100;
         mContentViewPager.setLayoutParams(params);
         initTabSegment();
     }
