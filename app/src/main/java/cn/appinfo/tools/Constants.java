@@ -79,9 +79,9 @@ public class Constants {
 	public static final int CONNECTION_TIMEOUT=10;//发送OkHttp请求时的超时时间 S
 	public static final int READ_TIMEOUT=10;//读取OkHttp响应数据时长
 
-	public static final String SERVER_IP="http://joysing.cc";
-	public static final String SERVER_PORT="8081";
-	public static final String SERVER_APP_NAME="appsys";
+	public static final String SERVER_IP="http://appinfo.joysing.cc";
+	public static final String SERVER_PORT="80";
+	public static final String SERVER_APP_NAME="";
 	public static final String SERVER_BASE_PATH=SERVER_IP+":"+SERVER_PORT+"/"+SERVER_APP_NAME;
 
 	public static final String BACKEND_LOGIN_URL=SERVER_BASE_PATH+"/android/user/doLogin";
