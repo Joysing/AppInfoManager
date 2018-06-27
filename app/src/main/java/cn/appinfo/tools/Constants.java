@@ -88,6 +88,7 @@ public class Constants {
 	public static final String DEV_LOGIN_URL=SERVER_BASE_PATH+"/android/dev/doLogin";
 	public static final String GET_BACKEND_APPS_URL=SERVER_BASE_PATH+"/android/backend/appInfo/appList";
 	public static final String GET_DEV_APPS_URL=SERVER_BASE_PATH+"/android/dev/appInfo/appList";
+	public static final String GET_APP_DETAIL_URL=SERVER_BASE_PATH+"/android/dev/appInfo/appInfoView";
     public static final String AUDIT_APP_URL=SERVER_BASE_PATH+"/android/backend/appInfo/doCheck";
     public static final String SOLD_UP_APP_URL=SERVER_BASE_PATH+"/android/dev/appInfo/soldUp.json";
     public static final String SOLD_DOWN_APP_URL=SERVER_BASE_PATH+"/android/dev/appInfo/soldDown.json";
@@ -133,4 +134,6 @@ public class Constants {
     public static final int ADD_APP_VERSION_SUCCESS=2;
     public static final int UPDATE_APP_VERSION_SUCCESS=3;
     public static final int LOAD_APP_NEW_VERSION_SUCCESS=4;
+
+    public static final int UPDATE_APPINFO_CODE=1;
 }

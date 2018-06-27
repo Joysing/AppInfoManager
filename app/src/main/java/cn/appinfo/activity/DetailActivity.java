@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -90,6 +91,14 @@ public class DetailActivity extends Activity {
             showDevAppInfo(appInfo);
         }
         appInfoId=appInfo.getId();
+        loadAppInfo();
+
+        initTopBar();
+        mTopBar.setTitle(appInfo.getSoftwareName());
+
+
+    }
+    private void loadAppInfo(){
         List<String> list=new ArrayList<>();
         list.add("软件名称："+appInfo.getSoftwareName());
         list.add("APK名称："+appInfo.getApkName());
@@ -112,11 +121,6 @@ public class DetailActivity extends Activity {
         }else{
             iconView.setImageResource(R.mipmap.no_picture);
         }
-
-        initTopBar();
-        mTopBar.setTitle(appInfo.getSoftwareName());
-
-
     }
     private void showAuditInfo(AppInfo appInfo){
         devButtonLayout.setVisibility(View.GONE);
@@ -310,7 +314,7 @@ public class DetailActivity extends Activity {
         Intent intent=new Intent(context, AddAppInfoActivity.class);
         intent.putExtra("appInfo",appInfo);
         intent.putExtra("devId",appInfo.getDevId());
-        startActivity(intent);
+        startActivityForResult(intent,Constants.UPDATE_APPINFO_CODE);
     }
     /**
      * 删除app信息
@@ -360,13 +364,44 @@ public class DetailActivity extends Activity {
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            Toast.makeText(context,msg.obj.toString(),Toast.LENGTH_LONG).show();
+            switch (msg.what){
+                case Constants.SUCCESS:
+                    loadAppInfo();
+                break;
+                default:
+                    Toast.makeText(context,msg.obj.toString(),Toast.LENGTH_LONG).show();
+                break;
+            }
         }
     };
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case Constants.UPDATE_APPINFO_CODE:
+                Message message = new Message();
+                RequestBody requestBody = new FormBody.Builder()
+                        .add("id", appInfo.getId()+"").build();
+                OkHttpUtil.sendOkHttpRequest(Constants.GET_APP_DETAIL_URL, requestBody, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        message.what = Constants.FAIL;
+                        message.obj = "网络超时,请查看网络......";
+                        handler.sendMessage(message);
+                    }
 
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        message.what = Constants.SUCCESS;
+                        String json = response.body().string();
+                        //把json转换成Java对象
+                        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                        appInfo = gson.fromJson(json, AppInfo.class);
+                        handler.sendMessage(message);
+                    }
+                });
+                break;
+        }
     }
 }

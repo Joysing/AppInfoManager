@@ -538,7 +538,10 @@ public class AddAppInfoActivity extends AppCompatActivity {
                     });
                     break;
                 case Constants.ADD_APPINFO_SUCCESS:
+                    Toast.makeText(context, result.toString(), Toast.LENGTH_LONG).show();
+                    break;
                 case Constants.UPDATE_APPINFO_SUCCESS:
+                    setResult(Constants.UPDATE_APPINFO_CODE);
                     Toast.makeText(context, result.toString(), Toast.LENGTH_LONG).show();
                     break;
                 default:

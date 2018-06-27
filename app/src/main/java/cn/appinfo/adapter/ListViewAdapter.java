@@ -1,12 +1,10 @@
 package cn.appinfo.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +27,6 @@ public class ListViewAdapter extends BaseAdapter {
     private UserInfo userInfo;
     private int loginType;
     private JumpActivityService jumpActivityService;
-    private boolean searchFlag=false;
-    SpannableStringBuilder style=new SpannableStringBuilder();
-
-    public void setSearchFlag(boolean searchFlag) {
-        this.searchFlag = searchFlag;
-    }
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
@@ -72,94 +64,52 @@ public class ListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        ViewHolder viewHolder;
+        if(view==null){
+            viewHolder=new ViewHolder();
+            if(Constants.BACKEND_USER_TYPE==loginType) {
+                view = inflater.inflate(R.layout.items_check, null);
+            }else if(Constants.DEV_USER_TYPE==loginType) {
+                view = inflater.inflate(R.layout.items_app, null);
+            }
+            viewHolder.iconView=view.findViewById(R.id.soft_image);
+            viewHolder.softNameView=view.findViewById(R.id.soft_name);
+            viewHolder.versionView=view.findViewById(R.id.soft_version);
+            viewHolder.statusView=view.findViewById(R.id.soft_status);
+            viewHolder.buttonCheck=view.findViewById(R.id.button_check);
+            view.setTag(viewHolder);
+        }else{
+            viewHolder= (ViewHolder) view.getTag();
+        }
+        AppInfo appInfo=appInfoList.get(i);
+        if(appInfo.getBitmap()!=null){
+            viewHolder.iconView.setImageBitmap(appInfo.getBitmap());
+        }else{
+            viewHolder.iconView.setImageResource(R.mipmap.no_picture);
+        }
+        String searchKey=ViewPagerAdapter.searchSoftwareName;
+        if("".equals(searchKey)){
+            viewHolder.softNameView.setText(appInfo.getSoftwareName());
+        }else{
+            SpannableStringBuilder highLightSoftName=new SpannableStringBuilder(appInfo.getSoftwareName());
+            int startIndex=appInfo.getSoftwareName().toLowerCase().indexOf(searchKey.toLowerCase());
+            int endIndex=startIndex+searchKey.length();
+            highLightSoftName.setSpan(new ForegroundColorSpan(Color.RED),startIndex,endIndex, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            viewHolder.softNameView.setText(highLightSoftName);
+        }
+        viewHolder.versionView.setText("最新版本号："+(appInfo.getVersionNo()==null?"无":appInfo.getVersionNo()));
+        viewHolder.statusView.setText("状态:"+appInfo.getStatusName()
+                +"\n大小："+appInfo.getSoftwareSize()+"M"
+                +"\n创建时间"+appInfo.getCreationDate());
+
         if(Constants.BACKEND_USER_TYPE==loginType){
-            view=showManagerAppList(i,view);
+            viewHolder.buttonCheck.setText(appInfo.getStatusName());
+            viewHolder.buttonCheck.setOnClickListener((view1) -> jumpActivityService.jump(appInfo,Constants.AUDIT));
+            view.setOnClickListener((view2)-> jumpActivityService.jump(appInfo,Constants.AUDIT));
         }else if(Constants.DEV_USER_TYPE==loginType){
-            view=showDeveloperAppList(i,view);
+            viewHolder.buttonCheck.setOnClickListener((view1) -> jumpActivityService.jump(appInfo,Constants.DETAIL));
+            view.setOnClickListener((view2)-> jumpActivityService.jump(appInfo,Constants.DETAIL));
         }
-        return view;
-    }
-    @SuppressLint({"SetTextI18n", "InflateParams"})
-    private View showManagerAppList(int i, View view) {
-        ViewHolder viewHolder;
-        if(view==null){
-            viewHolder=new ViewHolder();
-            view=inflater.inflate(R.layout.items_check,null);
-            viewHolder.iconView=view.findViewById(R.id.soft_image);
-            viewHolder.softNameView=view.findViewById(R.id.soft_name);
-            viewHolder.versionView=view.findViewById(R.id.soft_version);
-            viewHolder.statusView=view.findViewById(R.id.soft_status);
-            viewHolder.buttonCheck=view.findViewById(R.id.button_check);
-            view.setTag(viewHolder);
-        }else{
-            viewHolder= (ViewHolder) view.getTag();
-        }
-        AppInfo appInfo=appInfoList.get(i);
-        if(appInfo.getBitmap()!=null){
-            viewHolder.iconView.setImageBitmap(appInfo.getBitmap());
-        }else{
-            viewHolder.iconView.setImageResource(R.mipmap.no_picture);
-        }
-        String searchKey=ViewPagerAdapter.searchSoftwareName;
-        if("".equals(searchKey)){
-            viewHolder.softNameView.setText(appInfo.getSoftwareName());
-        }else{
-            SpannableStringBuilder highLightSoftName=new SpannableStringBuilder(appInfo.getSoftwareName());
-            int startIndex=appInfo.getSoftwareName().toLowerCase().indexOf(searchKey.toLowerCase());
-            Log.i("0000", "showManagerAppList: "+searchKey.length());
-            int endIndex=startIndex+searchKey.length();
-            highLightSoftName.setSpan(new ForegroundColorSpan(Color.RED),startIndex,endIndex, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            viewHolder.softNameView.setText(highLightSoftName);
-        }
-        viewHolder.versionView.setText("最新版本号："+(appInfo.getVersionNo()==null?"无":appInfo.getVersionNo()));
-        viewHolder.statusView.setText("状态:"+appInfo.getStatusName()
-                +"\n大小："+appInfo.getSoftwareSize()+"M"
-                +"\n创建时间"+appInfo.getCreationDate());
-        viewHolder.buttonCheck.setText(appInfo.getStatusName());
-        viewHolder.buttonCheck.setOnClickListener((view1) -> jumpActivityService.jump(appInfo,Constants.AUDIT));
-        view.setOnClickListener((view2)-> jumpActivityService.jump(appInfo,Constants.AUDIT));
-
-        return view;
-    }
-
-    @SuppressLint({"SetTextI18n", "InflateParams"})
-    private View showDeveloperAppList(int i, View view) {
-        ViewHolder viewHolder;
-        if(view==null){
-            viewHolder=new ViewHolder();
-            view=inflater.inflate(R.layout.items_app,null);
-            viewHolder.iconView=view.findViewById(R.id.soft_image);
-            viewHolder.softNameView=view.findViewById(R.id.soft_name);
-            viewHolder.versionView=view.findViewById(R.id.soft_version);
-            viewHolder.statusView=view.findViewById(R.id.soft_status);
-            viewHolder.buttonCheck=view.findViewById(R.id.button_check);
-            view.setTag(viewHolder);
-        }else{
-            viewHolder= (ViewHolder) view.getTag();
-        }
-        AppInfo appInfo=appInfoList.get(i);
-        if(appInfo.getBitmap()!=null){
-            viewHolder.iconView.setImageBitmap(appInfo.getBitmap());
-        }else{
-            viewHolder.iconView.setImageResource(R.mipmap.no_picture);
-        }
-        String searchKey=ViewPagerAdapter.searchSoftwareName;
-        if("".equals(searchKey)){
-            viewHolder.softNameView.setText(appInfo.getSoftwareName());
-        }else{
-            SpannableStringBuilder highLightSoftName=new SpannableStringBuilder(appInfo.getSoftwareName());
-            int startIndex=appInfo.getSoftwareName().toLowerCase().indexOf(searchKey.toLowerCase());
-            Log.i("0000", "showManagerAppList: "+searchKey.length());
-            int endIndex=startIndex+searchKey.length();
-            highLightSoftName.setSpan(new ForegroundColorSpan(Color.RED),startIndex,endIndex, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            viewHolder.softNameView.setText(highLightSoftName);
-        }
-        viewHolder.versionView.setText("最新版本号："+(appInfo.getVersionNo()==null?"无":appInfo.getVersionNo()));
-        viewHolder.statusView.setText("状态:"+appInfo.getStatusName()
-                +"\n大小："+appInfo.getSoftwareSize()+"M"
-                +"\n创建时间"+appInfo.getCreationDate());
-        viewHolder.buttonCheck.setOnClickListener((view1) -> jumpActivityService.jump(appInfo,Constants.DETAIL));
-        view.setOnClickListener((view2)-> jumpActivityService.jump(appInfo,Constants.DETAIL));
         return view;
     }
     static class ViewHolder{
