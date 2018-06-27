@@ -268,7 +268,7 @@ public class AddAppInfoActivity extends AppCompatActivity {
                 return;
             }
             RequestBody fileBody=new FormBody.Builder().build();
-            if(!"".equals(logoPicPath)){
+            if(!"".equals(logoPicPath)&&logoPicPath!=null){
                 File cacheImage = new File(context.getFilesDir(), appInfo.getId() + ".png");
                 cacheImage.delete();
                 fileBody = RequestBody.create(MediaType.parse("image/*"), new File(logoPicPath));

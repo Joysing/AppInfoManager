@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -135,6 +136,11 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
                 mTopBar.addRightImageButton(R.mipmap.search_btn_no, R.id.topbar_right_search_button).setOnClickListener((View view) -> {
                     if(searchEditText.getVisibility()==View.INVISIBLE){
                         searchEditText.setVisibility(View.VISIBLE);
+                        searchEditText.setFocusable(true);
+                        searchEditText.setFocusableInTouchMode(true);
+                        searchEditText.requestFocus();
+                        InputMethodManager inputManager = (InputMethodManager)searchEditText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputManager.showSoftInput(searchEditText, 0);
                         mTopBar.setTitle("");
                         mTopBar.addLeftBackImageButton().setOnClickListener(view1 -> {
                             mTopBar.setTitle("App列表");

@@ -34,7 +34,10 @@ public class DeveloperMainActivity extends Activity {
         Intent intent = getIntent();
         userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
         ViewGroup.LayoutParams params = mContentViewPager.getLayoutParams();
-        params.height =QMUIDisplayHelper.getScreenHeight(this)-QMUIDisplayHelper.getStatusBarHeight(this)-100;
+        params.height =QMUIDisplayHelper.getScreenHeight(this)
+                -QMUIDisplayHelper.getStatusBarHeight(this)
+                -QMUIDisplayHelper.getActionBarHeight(this)
+                -mTabSegment.getHeight();
         mContentViewPager.setLayoutParams(params);
         initTabSegment();
     }
@@ -66,7 +69,7 @@ public class DeveloperMainActivity extends Activity {
 
     @Override
     protected void onRestart() {
-        mContentViewPager.setAdapter(new ViewPagerAdapter(this, userInfo));
+//        mContentViewPager.setAdapter(new ViewPagerAdapter(this, userInfo));
         super.onRestart();
     }
 }
