@@ -222,6 +222,7 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
                         ?((BackendUser)userInfo.getUser()).getUserName()
                         :((DevUser)userInfo.getUser()).getDevName();
                 viewPage=LayoutInflater.from(context).inflate(R.layout.viewpager_mine, null);
+                LayoutInflater.from(context).inflate(R.layout.main, null).setBackgroundResource(R.color.qmui_config_color_white);
                 ((TextView)viewPage.findViewById(R.id.textView_usernameShow)).setText("欢迎您："+ usernameShow);
                 ((TextView)viewPage.findViewById(R.id.app_version)).setText("软件版本：v"+QMUIPackageHelper.getAppVersion(context));
                 Button buttonLogout=viewPage.findViewById(R.id.buttonLogout);

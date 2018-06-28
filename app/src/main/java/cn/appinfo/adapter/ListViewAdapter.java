@@ -68,16 +68,12 @@ public class ListViewAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         if(view==null){
             viewHolder=new ViewHolder();
-            if(Constants.BACKEND_USER_TYPE==loginType) {
-                view = inflater.inflate(R.layout.items_check, null);
-            }else if(Constants.DEV_USER_TYPE==loginType) {
-                view = inflater.inflate(R.layout.items_app, null);
-            }
+            view = inflater.inflate(R.layout.items_app, null);
             viewHolder.iconView=view.findViewById(R.id.soft_image);
             viewHolder.softNameView=view.findViewById(R.id.soft_name);
             viewHolder.versionView=view.findViewById(R.id.soft_version);
             viewHolder.statusView=view.findViewById(R.id.soft_status);
-            viewHolder.buttonCheck=view.findViewById(R.id.button_check);
+            viewHolder.button=view.findViewById(R.id.button_check);
             view.setTag(viewHolder);
         }else{
             viewHolder= (ViewHolder) view.getTag();
@@ -104,11 +100,11 @@ public class ListViewAdapter extends BaseAdapter {
                 +"\n时间："+simpleDateFormat.format(appInfo.getCreationDate().getTime()));
 
         if(Constants.BACKEND_USER_TYPE==loginType){
-            viewHolder.buttonCheck.setText(appInfo.getStatusName());
-            viewHolder.buttonCheck.setOnClickListener((view1) -> jumpActivityService.jump(appInfo,Constants.AUDIT));
+            viewHolder.button.setText(appInfo.getStatusName());
+            viewHolder.button.setOnClickListener((view1) -> jumpActivityService.jump(appInfo,Constants.AUDIT));
             view.setOnClickListener((view2)-> jumpActivityService.jump(appInfo,Constants.AUDIT));
         }else if(Constants.DEV_USER_TYPE==loginType){
-            viewHolder.buttonCheck.setOnClickListener((view1) -> jumpActivityService.jump(appInfo,Constants.DETAIL));
+            viewHolder.button.setOnClickListener((view1) -> jumpActivityService.jump(appInfo,Constants.DETAIL));
             view.setOnClickListener((view2)-> jumpActivityService.jump(appInfo,Constants.DETAIL));
         }
         return view;
@@ -118,6 +114,6 @@ public class ListViewAdapter extends BaseAdapter {
         TextView softNameView;
         TextView versionView;
         TextView statusView;
-        Button buttonCheck;
+        Button button;
     }
 }

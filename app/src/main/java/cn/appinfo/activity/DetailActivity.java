@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIListPopup;
@@ -84,6 +85,7 @@ public class DetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.appinfo_detail);
+        QMUIStatusBarHelper.translucent(this);
         ButterKnife.bind(this);
 
         Intent intent=getIntent();
@@ -163,7 +165,11 @@ public class DetailActivity extends Activity {
         if (file.exists()) {
             //本地加载
             Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-            iconView.setImageBitmap(bitmap);
+            if(bitmap!=null){
+                iconView.setImageBitmap(bitmap);
+            }else{
+                iconView.setImageResource(R.mipmap.no_picture);
+            }
         } else {
             //网络加载
             if (appInfo.getLogoPicPath() != null) {

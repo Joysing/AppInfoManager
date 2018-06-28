@@ -22,10 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.DeveloperMainActivity"
-            android:theme="@style/QMUI.Compat.NoActionBar" />
-        <activity
-            android:name=".activity.ManagerMainActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/QMUI.Compat.NoActionBar" />
         <activity
             android:name=".activity.DetailActivity"

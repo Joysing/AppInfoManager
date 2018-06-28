@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -86,16 +85,7 @@ public class LoginActivity extends Activity {
      */
     private void jumpActivity(UserInfo userInfo) {
         Intent intent =null;
-        switch (userInfo.getUserType()){
-            case Constants.BACKEND_USER_TYPE:
-                //跳管理员后台
-                intent=new Intent(this,ManagerMainActivity.class);
-                break;
-            case Constants.DEV_USER_TYPE:
-                //跳开发者平台
-                intent=new Intent(this,DeveloperMainActivity.class);
-                break;
-        }
+        intent=new Intent(this,MainActivity.class);
         intent.putExtra("userInfo",userInfo);
         startActivity(intent);//界面跳转
     }

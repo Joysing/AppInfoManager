@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIResHelper;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 
 import butterknife.BindView;
@@ -20,7 +21,7 @@ import cn.appinfo.entity.UserInfo;
 import cn.appinfo.tools.Constants;
 
 
-public class ManagerMainActivity extends Activity {
+public class MainActivity extends Activity {
     @BindView( R.id.tabSegment)
     QMUITabSegment mTabSegment;
     @BindView( R.id.contentViewPager)
@@ -30,15 +31,15 @@ public class ManagerMainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView( R.layout.main);
+        QMUIStatusBarHelper.translucent(this);
+        setContentView(R.layout.main);
         ButterKnife.bind(this);
         Intent intent = getIntent();
         userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
         ViewGroup.LayoutParams params = mContentViewPager.getLayoutParams();
         params.height =QMUIDisplayHelper.getScreenHeight(this)
-                -QMUIDisplayHelper.getStatusBarHeight(this)
                 -QMUIDisplayHelper.getActionBarHeight(this)
-                -mTabSegment.getHeight();
+                -50;
         mContentViewPager.setLayoutParams(params);
         initTabSegment();
     }
@@ -51,7 +52,7 @@ public class ManagerMainActivity extends Activity {
         QMUITabSegment.Tab checkTab = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(this,  R.mipmap.view_app_list_no),//未选中图片
                 ContextCompat.getDrawable(this,  R.mipmap.view_app_list_pr),//选中图片
-                "审核", true
+                "软件管理", true
         );
         QMUITabSegment.Tab mineTab = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(this,  R.mipmap.view_user_no),//未选中图片
@@ -66,13 +67,13 @@ public class ManagerMainActivity extends Activity {
         mTabSegment.setItemSpaceInScrollMode(space);
         mTabSegment.setupWithViewPager(mContentViewPager, false);
         mTabSegment.setPadding(space, 0, space, 0);
-
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){

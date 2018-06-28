@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import java.io.File;
@@ -109,6 +110,7 @@ public class AddAppInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_app_info);
+        QMUIStatusBarHelper.translucent(this);
         ButterKnife.bind(this);
         qmuiTopBar.addLeftBackImageButton().setOnClickListener(v -> finish());
         qmuiTopBar.setTitle("添加App信息");

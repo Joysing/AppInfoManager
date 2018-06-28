@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ManagerMainActivity"
+    android:fitsSystemWindows="true"
+    android:background="@color/qmui_config_color_blue"
+    tools:context=".activity.MainActivity"
     tools:layout_editor_absoluteY="25dp">
 
     <android.support.v4.view.ViewPager
@@ -20,7 +22,8 @@
     <com.qmuiteam.qmui.widget.QMUITabSegment
         android:id="@+id/tabSegment"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
+        android:background="@color/qmui_config_color_white"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

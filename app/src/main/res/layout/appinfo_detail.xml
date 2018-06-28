@@ -4,39 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".activity.DetailActivity"
     tools:layout_editor_absoluteY="50dp">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="49dp"
         android:layout_marginBottom="84dp"
-        android:fitsSystemWindows="true"
+        app:qmui_topbar_bg_color="@color/qmui_config_color_blue"
         app:layout_constraintBottom_toTopOf="@+id/ConstraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-            <com.qmuiteam.qmui.widget.QMUITopBar
-                android:id="@+id/topbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                app:qmui_topbar_title_color="@color/qmui_config_color_white"
-                app:qmui_layout_collapseMode="pin"
-                app:qmui_topbar_bg_color="@color/qmui_config_color_blue"
-                app:qmui_topbar_need_separator="false" >
+        <com.qmuiteam.qmui.widget.QMUITopBar
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:qmui_layout_collapseMode="pin"
+            app:qmui_topbar_bg_color="@color/qmui_config_color_blue"
+            app:qmui_topbar_need_separator="false"
+            app:qmui_topbar_title_color="@color/qmui_config_color_white">
 
-                <Button
-                    android:id="@+id/topbar_right_change_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:text="Button"
-                    android:visibility="invisible" />
-            </com.qmuiteam.qmui.widget.QMUITopBar>
+            <Button
+                android:id="@+id/topbar_right_change_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:text="Button"
+                android:visibility="invisible" />
+        </com.qmuiteam.qmui.widget.QMUITopBar>
 
     </android.support.design.widget.AppBarLayout>
 
