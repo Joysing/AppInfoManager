@@ -110,7 +110,6 @@ public class AddAppInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_app_info);
-        QMUIStatusBarHelper.translucent(this);
         ButterKnife.bind(this);
         qmuiTopBar.addLeftBackImageButton().setOnClickListener(v -> finish());
         qmuiTopBar.setTitle("添加App信息");

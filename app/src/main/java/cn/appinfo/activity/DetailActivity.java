@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIListPopup;
@@ -85,9 +84,7 @@ public class DetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.appinfo_detail);
-        QMUIStatusBarHelper.translucent(this);
         ButterKnife.bind(this);
-
         Intent intent=getIntent();
         appInfo= (AppInfo) intent.getSerializableExtra("appInfo");
         loginType=intent.getIntExtra("loginType",Constants.BACKEND_USER_TYPE);
