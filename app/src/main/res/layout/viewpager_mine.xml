@@ -4,69 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/qmui_config_color_white">
+    android:background="@color/qmui_config_color_white"
+    tools:layout_editor_absoluteY="25dp">
+
+    <ImageView
+        android:id="@+id/ImageView"
+        android:layout_width="70dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="19dp"
+        android:layout_marginTop="111dp"
+        android:src="@mipmap/app_info_icon"
+        app:layout_constraintBottom_toTopOf="@+id/textView_usernameShow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/app_info_icon" />
 
     <TextView
         android:id="@+id/textView_usernameShow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="224dp"
-        android:layout_marginTop="8dp"
         android:text="欢迎您：管理员"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLogout"
+        app:layout_constraintBottom_toTopOf="@+id/app_version"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ImageView" />
-
-    <ImageView
-        android:id="@+id/ImageView"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/textView_usernameShow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@mipmap/app_info_icon" />
-
-    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-        android:id="@+id/buttonLogout"
-        android:layout_width="207dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="76dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="44dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/logout"
-        android:textColor="@color/qmui_config_color_red"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_password"
-        app:qmui_borderColor="@color/qmui_config_color_red"
-        app:qmui_borderWidth="2px"
-        app:qmui_isRadiusAdjustBounds="true"
-        app:qmui_radius="15dp" />
 
     <TextView
         android:id="@+id/app_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="243dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLogout"
+        app:layout_constraintBottom_toTopOf="@+id/textView11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_usernameShow" />
@@ -75,13 +45,31 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="196dp"
         android:autoLink="web"
         android:text="开源地址：https://github.com/Joysing/AppInfoManager"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLogout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_version" />
 
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/buttonLogout"
+        android:layout_width="207dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="75dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/logout"
+        android:textColor="@color/qmui_config_color_red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:qmui_borderColor="@color/qmui_config_color_red"
+        app:qmui_borderWidth="2px"
+        app:qmui_isRadiusAdjustBounds="true"
+        app:qmui_radius="15dp" />
 </android.support.constraint.ConstraintLayout>

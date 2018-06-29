@@ -129,14 +129,31 @@ public class DetailActivity extends Activity {
             passButton.setText("  该软件无新版本，无需审核  ");
             passButton.getLayoutParams().width= ViewGroup.LayoutParams.WRAP_CONTENT;
             unPassButton.setVisibility(View.GONE);
-        }else if(appInfo.getStatus()==2){
-            passButton.setClickable(false);
-            passButton.setText("已审核通过");
-            unPassButton.setVisibility(View.GONE);
-        }else if(appInfo.getStatus()==3){
-            unPassButton.setClickable(false);
-            unPassButton.setText("已审核不通过");
-            passButton.setVisibility(View.GONE);
+        }else {
+            switch (appInfo.getStatus()) {
+                case Constants.PASS_STATUS:
+                    passButton.setClickable(false);
+                    passButton.setText("已审核通过");
+                    unPassButton.setVisibility(View.GONE);
+                    break;
+                case Constants.UN_PASS_STATUS:
+                    unPassButton.setClickable(false);
+                    unPassButton.setText("已审核不通过");
+                    passButton.setVisibility(View.GONE);
+                    break;
+                case Constants.SOLD_UP_STATUS:
+                    passButton.setClickable(false);
+                    passButton.setText("已上架");
+                    unPassButton.setVisibility(View.GONE);
+                    break;
+                case Constants.SOLD_DOWN_STATUS:
+                    passButton.setClickable(false);
+                    passButton.setText("已下架");
+                    unPassButton.setVisibility(View.GONE);
+                    break;
+                default:
+                    break;
+            }
         }
     }
     private void showDevAppInfo(AppInfo appInfo) {
