@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    android:fitsSystemWindows="true"
     tools:context=".activity.AddAppInfoActivity"
     tools:layout_editor_absoluteY="50dp">
 
@@ -11,7 +13,6 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:fitsSystemWindows="true"
         app:layout_constraintBottom_toTopOf="@+id/ConstraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +47,7 @@
         android:layout_marginBottom="50dp"
         android:layout_weight="1"
         android:orientation="vertical"
+        android:background="@color/qmui_config_color_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -211,7 +213,8 @@
     <LinearLayout
         android:id="@+id/dev_button_Layout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:background="@color/qmui_config_color_white"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

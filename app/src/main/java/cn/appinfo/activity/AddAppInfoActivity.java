@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -111,6 +112,7 @@ public class AddAppInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_app_info);
         ButterKnife.bind(this);
+        QMUIStatusBarHelper.translucent(this);// 沉浸式状态栏
         qmuiTopBar.addLeftBackImageButton().setOnClickListener(v -> finish());
         qmuiTopBar.setTitle("添加App信息");
         Intent intent=getIntent();
@@ -151,13 +153,19 @@ public class AddAppInfoActivity extends AppCompatActivity {
         }else if(softwareSize.equals("")){
             Toast.makeText(context,"软件大小不能为空",Toast.LENGTH_SHORT).show();
             return;
+        }else if(!isInteger(softwareSize)){
+            Toast.makeText(context,"软件大小只能输入整数",Toast.LENGTH_SHORT).show();
+            return;
         }else if(downloads.equals("")){
             Toast.makeText(context,"下载次数不能为空",Toast.LENGTH_SHORT).show();
+            return;
+        }else if(!isInteger(downloads)){
+            Toast.makeText(context,"下载次数只能输入整数",Toast.LENGTH_SHORT).show();
             return;
         }else if(appInfomation.equals("")){
             Toast.makeText(context,"软件简介不能为空",Toast.LENGTH_SHORT).show();
             return;
-        }else if(logoPicPath.equals("")){
+        }else if(logoPicPath==null||"".equals(logoPicPath)){
             Toast.makeText(context,"请选择软件图标",Toast.LENGTH_SHORT).show();
             return;
         }
@@ -251,8 +259,14 @@ public class AddAppInfoActivity extends AppCompatActivity {
             }else if(softwareSize.equals("")){
                 Toast.makeText(context,"软件大小不能为空",Toast.LENGTH_SHORT).show();
                 return;
+            }else if(!isInteger(softwareSize)){
+                Toast.makeText(context,"软件大小只能输入整数",Toast.LENGTH_SHORT).show();
+                return;
             }else if(downloads.equals("")){
                 Toast.makeText(context,"下载次数不能为空",Toast.LENGTH_SHORT).show();
+                return;
+            }else if(!isInteger(downloads)){
+                Toast.makeText(context,"下载次数只能输入整数",Toast.LENGTH_SHORT).show();
                 return;
             }else if(appInfomation.equals("")){
                 Toast.makeText(context,"软件简介不能为空",Toast.LENGTH_SHORT).show();
@@ -529,6 +543,7 @@ public class AddAppInfoActivity extends AppCompatActivity {
                     });
                     break;
                 case Constants.ADD_APPINFO_SUCCESS:
+                    setResult(Constants.ADD_APPINFO_CODE);
                     Toast.makeText(context, result.toString(), Toast.LENGTH_LONG).show();
                     break;
                 case Constants.UPDATE_APPINFO_SUCCESS:
@@ -551,6 +566,17 @@ public class AddAppInfoActivity extends AppCompatActivity {
             }
         }
         return key;
+    }
+
+    /*
+     * 判断是否为整数
+     * @param str 传入的字符串
+     * @return 是整数返回true,否则返回false
+     */
+
+    public static boolean isInteger(String str) {
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+        return pattern.matcher(str).matches();
     }
 
     final public static int  REQUEST_CODE_SOME_FEATURES_PERMISSIONS=0;

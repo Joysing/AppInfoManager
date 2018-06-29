@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
@@ -99,6 +100,7 @@ public class AppVersionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_version);
         ButterKnife.bind(this);
+        QMUIStatusBarHelper.translucent(this);// 沉浸式状态栏
         Intent intent=getIntent();
         qmuiTopBar.addLeftBackImageButton().setOnClickListener(v -> finish());
         qmuiTopBar.setTitle("新增版本信息【"+intent.getStringExtra("softwareName")+"】");
@@ -187,7 +189,7 @@ public class AppVersionActivity extends AppCompatActivity {
         }else if("".equals(versionInfo)){
             Toast.makeText(context,"版本简介不能为空",Toast.LENGTH_SHORT).show();
             return;
-        }else if("".equals(apkFilePath)){
+        }else if(apkFilePath==null||"".equals(apkFilePath)){
             Toast.makeText(context,"请选择apk文件",Toast.LENGTH_SHORT).show();
             return;
         }

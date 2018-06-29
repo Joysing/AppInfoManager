@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
     @BindView( R.id.contentViewPager)
     ViewPager mContentViewPager;
     private UserInfo userInfo;
-
+    public static String searchSoftwareName="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,15 +70,13 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case Constants.LOAD_APPINFO_DETAIL_CODE:
+            case Constants.ADD_APPINFO_CODE:
                 mContentViewPager.setAdapter(new ViewPagerAdapter(this, userInfo));
+                break;
+            default:
                 break;
         }
     }

@@ -21,15 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.MainActivity"
-            android:theme="@style/QMUI.Compat.NoActionBar" />
-        <activity
-            android:name=".activity.DetailActivity"
-            android:label="@string/title_activity_detail"
-            android:theme="@style/QMUI.Compat.NoActionBar" />
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.DetailActivity" />
         <activity android:name=".activity.AddAppInfoActivity" />
-        <activity android:name=".activity.AppVersionActivity"></activity>
+        <activity android:name=".activity.AppVersionActivity" />
     </application>
 
 </manifest>

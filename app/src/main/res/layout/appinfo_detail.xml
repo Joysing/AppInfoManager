@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
     android:fitsSystemWindows="true"
     tools:context=".activity.DetailActivity"
     tools:layout_editor_absoluteY="50dp">
@@ -12,18 +13,16 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:layout_marginBottom="84dp"
-        app:qmui_topbar_bg_color="@color/qmui_config_color_blue"
         app:layout_constraintBottom_toTopOf="@+id/ConstraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:qmui_topbar_bg_color="@color/qmui_config_color_blue">
 
         <com.qmuiteam.qmui.widget.QMUITopBar
             android:id="@+id/topbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
             app:qmui_layout_collapseMode="pin"
             app:qmui_topbar_bg_color="@color/qmui_config_color_blue"
             app:qmui_topbar_need_separator="false"
@@ -41,28 +40,28 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ImageView
-        android:id="@+id/app_info_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:layout_marginTop="5dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintBottom_toTopOf="@+id/ConstraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.222" />
-
     <LinearLayout
         android:id="@+id/ConstraintLayout"
-        android:layout_width="384dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="58dp"
+        android:layout_marginBottom="50dp"
         android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/qmui_config_color_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout">
+
+        <ImageView
+            android:id="@+id/app_info_icon"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="5dp"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.222" />
 
         <ListView
             android:id="@+id/app_detail"
@@ -73,8 +72,9 @@
     <RelativeLayout
         android:id="@+id/audit_button_Layout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:gravity="center"
+        android:background="@color/qmui_config_color_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -109,8 +109,9 @@
     <LinearLayout
         android:id="@+id/dev_button_Layout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:gravity="center"
+        android:background="@color/qmui_config_color_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

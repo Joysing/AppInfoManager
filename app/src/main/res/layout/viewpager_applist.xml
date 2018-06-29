@@ -57,7 +57,7 @@
 
             <EditText
                 android:id="@+id/searchEditText"
-                android:layout_width="wrap_content"
+                android:layout_width="205dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"

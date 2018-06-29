@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIListPopup;
@@ -85,6 +86,7 @@ public class DetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.appinfo_detail);
         ButterKnife.bind(this);
+        QMUIStatusBarHelper.translucent(this);// 沉浸式状态栏
         Intent intent=getIntent();
         appInfo= (AppInfo) intent.getSerializableExtra("appInfo");
         loginType=intent.getIntExtra("loginType",Constants.BACKEND_USER_TYPE);
@@ -302,37 +304,37 @@ public class DetailActivity extends Activity {
     public void soldUpAndDown(){
         String operation=shelvesButton.getText().toString();
         new QMUIDialog.MessageDialogBuilder(this)
-                                    .setMessage("确定"+operation+"？")
-                                    .addAction("取消", (dialog, index) -> dialog.dismiss())
-                                    .addAction("确定", (dialog, index) -> {
-                                        String url=null;
-                                        if(operation.equals("上架")){
-                                            url=Constants.SOLD_UP_APP_URL;
-                                        }else if(operation.equals("下架")){
-                                            url=Constants.SOLD_DOWN_APP_URL;
-                                        }
-                                        RequestBody requestBody = new FormBody.Builder()
-                                                .add("id", appInfoId+"")
-                                                .build();
-                                        OkHttpUtil.sendOkHttpRequest(url, requestBody, new Callback() {
-                                            Message message = new Message();
+            .setMessage("确定"+operation+"？")
+            .addAction("取消", (dialog, index) -> dialog.dismiss())
+            .addAction("确定", (dialog, index) -> {
+                String url=null;
+                if(operation.equals("上架")){
+                    url=Constants.SOLD_UP_APP_URL;
+                }else if(operation.equals("下架")){
+                    url=Constants.SOLD_DOWN_APP_URL;
+                }
+                RequestBody requestBody = new FormBody.Builder()
+                        .add("id", appInfoId+"")
+                        .build();
+                OkHttpUtil.sendOkHttpRequest(url, requestBody, new Callback() {
+                    Message message = new Message();
 
-                                            @Override
-                                            public void onFailure(Call call, IOException e) {
-                                                e.printStackTrace();
-                                                message.what = Constants.FAIL;
-                                                message.obj = "网络异常,请检查网络连接.";
-                                                handler.sendMessage(message);
-                                            }
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                        message.what = Constants.FAIL;
+                        message.obj = "网络异常,请检查网络连接.";
+                        handler.sendMessage(message);
+                    }
 
-                                            @Override
-                                            public void onResponse(Call call, Response response) throws IOException {
-                                                String json = response.body().string();
-                                                Gson gson=new Gson();
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String json = response.body().string();
+                        Gson gson=new Gson();
                             ResultUtil resultUtil = gson.fromJson(json, ResultUtil.class);
                             Message msg=new Message();
                             if (resultUtil.isResult()){
-                                msg.what=Constants.SUCCESS;
+                                msg.what=Constants.SOLD_UP_OR_DOWN_APP_SUCCESS;
                                 message.obj = operation+"操作成功！";
                                 finish();
                             }else {
@@ -385,7 +387,7 @@ public class DetailActivity extends Activity {
                             ResultUtil resultUtil = gson.fromJson(json, ResultUtil.class);
                             Message msg=new Message();
                             if (resultUtil.isResult()){
-                                msg.what=Constants.SUCCESS;
+                                msg.what=Constants.DELETE_APP_SUCCESS;
                                 message.obj = "删除成功！";
                                 finish();
                             }else {

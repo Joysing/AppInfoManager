@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    android:fitsSystemWindows="true"
     tools:context=".activity.AddAppInfoActivity"
     tools:layout_editor_absoluteY="50dp">
 
@@ -11,7 +13,6 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:fitsSystemWindows="true"
         app:layout_constraintBottom_toTopOf="@+id/ConstraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +22,6 @@
             android:id="@+id/topbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
             app:qmui_layout_collapseMode="pin"
             app:qmui_topbar_bg_color="@color/qmui_config_color_blue"
             app:qmui_topbar_need_separator="false"
@@ -41,10 +41,11 @@
 
     <RelativeLayout
         android:id="@+id/ConstraintLayout"
-        android:layout_width="384dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="58dp"
+        android:layout_marginBottom="50dp"
         android:layout_weight="1"
+        android:background="@color/qmui_config_color_white"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -253,14 +254,14 @@
     <LinearLayout
         android:id="@+id/dev_button_Layout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:background="@color/qmui_config_color_white"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout"
-        app:layout_constraintVertical_bias="0.111">
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout">
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
             android:id="@+id/addAppInfo_button"

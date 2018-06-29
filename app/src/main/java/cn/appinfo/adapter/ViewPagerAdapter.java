@@ -48,6 +48,7 @@ import cn.appinfo.R;
 import cn.appinfo.activity.AddAppInfoActivity;
 import cn.appinfo.activity.DetailActivity;
 import cn.appinfo.activity.LoginActivity;
+import cn.appinfo.activity.MainActivity;
 import cn.appinfo.entity.AppInfo;
 import cn.appinfo.entity.BackendUser;
 import cn.appinfo.entity.DevUser;
@@ -73,7 +74,6 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
     private List<AppInfo> appInfoList;
     private ListViewAdapter listViewAdapter;
     private QMUIPullRefreshLayout qmuiPullRefreshLayout;
-    public static String searchSoftwareName="";
 
     private Comparator<AppInfo> sortByNameComparator= (appInfo, t1) -> appInfo.getSoftwareName().compareTo(t1.getSoftwareName());
     private Comparator<AppInfo> sortBySizeComparator= (appInfo, t1) -> appInfo.getSoftwareSize().compareTo(t1.getSoftwareSize());
@@ -125,14 +125,27 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
                 searchEditText=viewPage.findViewById(R.id.searchEditText);
                 searchEditText.setOnEditorActionListener((textView, i, keyEvent) -> {
                     if (i == EditorInfo.IME_ACTION_SEARCH || i == EditorInfo.IME_ACTION_UNSPECIFIED) {
-                        searchSoftwareName=textView.getText().toString().trim();
+                        MainActivity.searchSoftwareName=textView.getText().toString().trim();
                         getAppList();
                         return true;
                     }
                     return false;
                 });
                 QMUITopBar mTopBar = viewPage.findViewById(R.id.topbar);
-                mTopBar.setTitle("App列表");
+                if("".equals(MainActivity.searchSoftwareName)){
+                    mTopBar.setTitle("App列表");
+                }else{
+                    mTopBar.setTitle("");
+                    searchEditText.setVisibility(View.VISIBLE);
+                    searchEditText.setText(MainActivity.searchSoftwareName);
+                    mTopBar.addLeftBackImageButton().setOnClickListener(view1 -> {
+                        mTopBar.setTitle("App列表");
+                        mTopBar.removeAllLeftViews();
+                        searchEditText.setVisibility(View.INVISIBLE);
+                        MainActivity.searchSoftwareName="";
+                        getAppList();
+                    });
+                }
                 mTopBar.addRightImageButton(R.mipmap.search_btn_no, R.id.topbar_right_search_button).setOnClickListener((View view) -> {
                     if(searchEditText.getVisibility()==View.INVISIBLE){
                         searchEditText.setVisibility(View.VISIBLE);
@@ -146,7 +159,7 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
                             mTopBar.setTitle("App列表");
                             mTopBar.removeAllLeftViews();
                             searchEditText.setVisibility(View.INVISIBLE);
-                            searchSoftwareName="";
+                            MainActivity.searchSoftwareName="";
                             getAppList();
                         });
                     }
@@ -156,7 +169,7 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
                     .setOnClickListener(v->{
                         Intent intent=new Intent(context, AddAppInfoActivity.class);
                         intent.putExtra("devId", ((DevUser)userInfo.getUser()).getId());
-                        context.startActivity(intent);
+                        ((Activity)context).startActivityForResult(intent,Constants.ADD_APPINFO_CODE);
 
                     });
                 }
@@ -222,7 +235,6 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
                         ?((BackendUser)userInfo.getUser()).getUserName()
                         :((DevUser)userInfo.getUser()).getDevName();
                 viewPage=LayoutInflater.from(context).inflate(R.layout.viewpager_mine, null);
-                LayoutInflater.from(context).inflate(R.layout.main, null).setBackgroundResource(R.color.qmui_config_color_white);
                 ((TextView)viewPage.findViewById(R.id.textView_usernameShow)).setText("欢迎您："+ usernameShow);
                 ((TextView)viewPage.findViewById(R.id.app_version)).setText("软件版本：v"+QMUIPackageHelper.getAppVersion(context));
                 Button buttonLogout=viewPage.findViewById(R.id.buttonLogout);
@@ -281,13 +293,13 @@ public class ViewPagerAdapter extends PagerAdapter implements JumpActivityServic
         if(loginType==Constants.BACKEND_USER_TYPE){
             url=Constants.GET_BACKEND_APPS_URL;
             requestBody = new FormBody.Builder()
-                    .add("querySoftwareName",searchSoftwareName)
+                    .add("querySoftwareName",MainActivity.searchSoftwareName)
                     .build();
         }else if(loginType==Constants.DEV_USER_TYPE){
             url=Constants.GET_DEV_APPS_URL;
             requestBody = new FormBody.Builder()
                     .add("devId", ((DevUser)userInfo.getUser()).getId()+"")
-                    .add("querySoftwareName",searchSoftwareName)
+                    .add("querySoftwareName",MainActivity.searchSoftwareName)
                     .build();
         }
         OkHttpUtil.sendOkHttpRequest(url, requestBody, new Callback() {

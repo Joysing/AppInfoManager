@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import cn.appinfo.R;
+import cn.appinfo.activity.MainActivity;
 import cn.appinfo.entity.AppInfo;
 import cn.appinfo.entity.UserInfo;
 import cn.appinfo.service.JumpActivityService;
@@ -84,7 +85,7 @@ public class ListViewAdapter extends BaseAdapter {
         }else{
             viewHolder.iconView.setImageResource(R.mipmap.no_picture);
         }
-        String searchKey=ViewPagerAdapter.searchSoftwareName;
+        String searchKey= MainActivity.searchSoftwareName;
         if("".equals(searchKey)){
             viewHolder.softNameView.setText(appInfo.getSoftwareName());
         }else{
