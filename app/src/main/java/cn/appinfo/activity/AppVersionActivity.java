@@ -30,12 +30,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,9 +92,10 @@ public class AppVersionActivity extends AppCompatActivity {
     private String apkFileName="";
     private BigDecimal versionSize;
 
-    AppVersion appVersion;
+    private AppVersion appVersion;
     private static final int FILE_SELECT_CODE = 1;
-    List<AppVersion> appVersionList;
+    private List<AppVersion> appVersionList;
+    private SimpleDateFormat simpleDateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -203,7 +204,6 @@ public class AppVersionActivity extends AppCompatActivity {
                 .addFormDataPart("createdBy", userId+"")
                 .build();
         RequestBody requestBody = ProgressHelper.withProgress(multipartBody, new ProgressUIListener() {
-            QMUITipDialog qmuiTipDialog;
             @Override
             public void onUIProgressStart(long totalBytes) {
                 super.onUIProgressStart(totalBytes);
@@ -223,7 +223,6 @@ public class AppVersionActivity extends AppCompatActivity {
             public void onUIProgressFinish() {
                 super.onUIProgressFinish();
                 Log.e(TAG, "onUIProgressFinish:");
-                qmuiTipDialog.dismiss();
             }
         });
         OkHttpUtil.sendOkHttpRequest(Constants.ADD_APP_VERSION_URL, requestBody, new Callback() {
@@ -379,7 +378,7 @@ public class AppVersionActivity extends AppCompatActivity {
                         list.add("版本号："+appVersion.getVersionNo() +"\n"
                                 +"版本大小："+appVersion.getVersionSize() +"MB\n"
                                 +"版本简介："+appVersion.getVersionInfo()+"\n"
-                                +"上传时间："+appVersion.getCreationDate());
+                                +"上传时间："+simpleDateFormat.format(appVersion.getCreationDate().getTime()));
                     }
                     ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(context,android.R.layout.simple_list_item_1,list);
                     listView.setAdapter(arrayAdapter);
