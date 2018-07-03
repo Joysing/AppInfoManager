@@ -153,9 +153,6 @@ public class AddAppInfoActivity extends AppCompatActivity {
         }else if(softwareSize.equals("")){
             Toast.makeText(context,"软件大小不能为空",Toast.LENGTH_SHORT).show();
             return;
-        }else if(!isInteger(softwareSize)){
-            Toast.makeText(context,"软件大小只能输入整数",Toast.LENGTH_SHORT).show();
-            return;
         }else if(downloads.equals("")){
             Toast.makeText(context,"下载次数不能为空",Toast.LENGTH_SHORT).show();
             return;
@@ -258,9 +255,6 @@ public class AddAppInfoActivity extends AppCompatActivity {
                 return;
             }else if(softwareSize.equals("")){
                 Toast.makeText(context,"软件大小不能为空",Toast.LENGTH_SHORT).show();
-                return;
-            }else if(!isInteger(softwareSize)){
-                Toast.makeText(context,"软件大小只能输入整数",Toast.LENGTH_SHORT).show();
                 return;
             }else if(downloads.equals("")){
                 Toast.makeText(context,"下载次数不能为空",Toast.LENGTH_SHORT).show();
