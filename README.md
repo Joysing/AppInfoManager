@@ -1,5 +1,5 @@
 # AppInfoManager
-AppInfoSystem的Android客户端
+松田学术项目AppInfoSystem的Android客户端
 
 服务端在https://github.com/Joysing/AppInfoSystem
 
